@@ -33,8 +33,10 @@ export const usePostStore = defineStore({
       this.post = null
       this.loading = true
       try {
-        this.post = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-        .then((response) => response.json())
+        let response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        this.post = response.data
+        // this.post = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        // .then((response) => response.json())
       } catch (error) {
         this.error = error
       } finally {
