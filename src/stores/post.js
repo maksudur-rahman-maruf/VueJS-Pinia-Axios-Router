@@ -42,6 +42,9 @@ export const usePostStore = defineStore({
       } finally {
         this.loading = false
       }
+    },
+    evenPostId() {
+      this.posts = this.posts.filter((post, index) => post.id % 2 === 0)
     }
   }
 })
