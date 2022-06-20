@@ -7,11 +7,15 @@ export const usePostStore = defineStore({
     posts: [],
     post: null,
     loading: false,
-    error: null
+    error: null,
+    evenPost: false
   }),
   getters: {
     getPostsPerAuthor: (state) => {
       return (authorId) => state.posts.filter((post) => post.userId === authorId)
+    },
+    getEvenPostId: (state) => {
+      return state.posts.filter((post, index) => post.id % 2 === 0)
     }
   }, 
   actions: {
@@ -42,9 +46,7 @@ export const usePostStore = defineStore({
       } finally {
         this.loading = false
       }
-    },
-    evenPostId() {
-      this.posts = this.posts.filter((post, index) => post.id % 2 === 0)
     }
+    
   }
 })

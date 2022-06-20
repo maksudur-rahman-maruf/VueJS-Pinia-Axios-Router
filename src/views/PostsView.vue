@@ -7,8 +7,8 @@ import { usePostStore } from "../stores/post";
 
 // const { fetchStatements } = useStatementStore()
 
-const { posts, loading, error } = storeToRefs(usePostStore());
-const { fetchPosts, evenPostId } = usePostStore();
+const { posts, loading, error, evenPost, getEvenPostId } = storeToRefs(usePostStore());
+const { fetchPosts } = usePostStore();
 
 fetchPosts();
 // fetchStatements()
@@ -37,11 +37,15 @@ log.warn("This is not logged now")
     This will render on "md" and above screens
     </mq-responsive>
     
-    <button type="button" class="btn btn-primary" @click="evenPostId">Even PostId</button>
+    <button type="button" class="btn btn-primary" @click="evenPost = !evenPost">Even PostId</button>
     
     <p v-if="loading">Loading posts...</p>
     <p v-if="error">{{ error.message }}</p>
-    <p v-if="posts" v-for="post in posts" :key="post.id">
+    <p v-if="evenPost" v-for="post in getEvenPostId" :key="post.id">
+      <RouterLink :to="`/post/${post.id}`"> {{ post.id }} {{ post.title }} </RouterLink>
+      <p>{{ post.body }}</p>
+    </p>
+    <p v-else v-for="post in posts" :key="post.id">
       <RouterLink :to="`/post/${post.id}`"> {{ post.id }} {{ post.title }} </RouterLink>
       <p>{{ post.body }}</p>
     </p>
